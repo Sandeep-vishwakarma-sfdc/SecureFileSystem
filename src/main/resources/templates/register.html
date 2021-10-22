@@ -12,6 +12,11 @@
 				<div class="col-md-8 offset-md-2">
 					<div class="my-card mt-3">
 					
+					<div th:if="${session.alertMessage}" th:classappend="${session.alertMessage.type}" class="alert" role="alert">
+  							<p class="text-center" th:text="${session.alertMessage.Content}"></p>
+  							<th:block th:text="${#session.removeAttribute('alertMessage')}"></th:block>
+					</div>
+					
 						<h1 class="text-center ">Register Here</h1>
 						<form th:action="@{/do_register}" method="post" th:object="${user}">
 

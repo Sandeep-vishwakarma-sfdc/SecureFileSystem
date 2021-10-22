@@ -1,14 +1,8 @@
 package com.viva.securefile.entity;
-
-import java.util.List;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 
 @Entity
@@ -16,66 +10,54 @@ public class File {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
-	private String name;
-	private String file_url;
+	private String filename;
+	private String filepassphrase;
+	private String fileurl;
 	@OneToOne
 	private User owner;
-	@ManyToMany
-	@JoinTable(name = "filerequester", joinColumns = @JoinColumn(name = "fileid"))
-	private List<User> requesters;
-
-	public File(int id, String name, String file_url, User owner, List<User> requesters) {
+	public File() {}
+	public File(int id, String filename, String filepassphrase, String fileurl, User owner) {
 		super();
 		this.id = id;
-		this.name = name;
-		this.file_url = file_url;
+		this.filename = filename;
+		this.filepassphrase = filepassphrase;
+		this.fileurl = fileurl;
 		this.owner = owner;
-		this.requesters = requesters;
 	}
-
 	public int getId() {
 		return id;
 	}
-
-	public String getName() {
-		return name;
-	}
-
-	public String getFile_url() {
-		return file_url;
-	}
-
-	public User getOwner() {
-		return owner;
-	}
-
-	public List<User> getRequesters() {
-		return requesters;
-	}
-
 	public void setId(int id) {
 		this.id = id;
 	}
-
-	public void setName(String name) {
-		this.name = name;
+	public String getFilename() {
+		return filename;
 	}
-
-	public void setFile_url(String file_url) {
-		this.file_url = file_url;
+	public void setFilename(String filename) {
+		this.filename = filename;
 	}
-
+	public String getfilepassphrase() {
+		return filepassphrase;
+	}
+	public void setfilepassphrase(String filepassphrase) {
+		this.filepassphrase = filepassphrase;
+	}
+	public String getfileurl() {
+		return fileurl;
+	}
+	public void setfileurl(String fileurl) {
+		this.fileurl = fileurl;
+	}
+	public User getOwner() {
+		return owner;
+	}
 	public void setOwner(User owner) {
 		this.owner = owner;
 	}
-
-	public void setRequesters(List<User> requesters) {
-		this.requesters = requesters;
-	}
-
 	@Override
 	public String toString() {
-		return "File [id=" + id + ", name=" + name + ", file_url=" + file_url + ", owner=" + owner + ", requesters="
-				+ requesters + "]";
+		return "File [id=" + id + ", filename=" + filename + ", filepassphrase=" + filepassphrase + ", fileurl="
+				+ fileurl + ", owner=" + owner + "]";
 	}
+
 }

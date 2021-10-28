@@ -3,6 +3,7 @@ package com.viva.securefile.controller;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,6 +20,9 @@ public class HomeController {
 	@Autowired
 	UserRepository userRepository;
 
+	@Autowired
+	private BCryptPasswordEncoder passwordEncoder;
+	
 	@GetMapping("/")
 	public String home() {
 		return "home";
@@ -52,8 +56,8 @@ public class HomeController {
 			}
 			user.setRole("ROLE_USER");
 			user.setActive("true");
+			user.setPassword(passwordEncoder.encode(user.getPassword()));
 			session.setAttribute("alertMessage", new Message("Successfully Registered", "alert-success"));
-			
 			this.userRepository.save(user);
 			return "register";
 		}catch(Exception e) {

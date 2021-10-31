@@ -1,6 +1,6 @@
 package com.viva.securefile.config;
 
-import java.util.ArrayList;
+
 import java.util.Collection;
 import java.util.List;
 
@@ -10,6 +10,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import com.viva.securefile.entity.User;
 
+@SuppressWarnings("serial")
 public class CustomUserDetails implements UserDetails {
 
 	private User user;

@@ -3,11 +3,105 @@
 <head>
 <meta charset="UTF-8">
 <title>My Files</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 </head>
 <body>
 
 <section>
-<h1>My Files</h1>
+<div class="container">
+<form th:action="@{/upload}" method="post" enctype="multipart/form-data">
+<input type="file" name="file"/>
+<!-- <input type="submit" value="Upload" class="btn btn-primary"/>  -->
+<button type="button" id="mymodal" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Upload</button>
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Secret Key</h4>
+      </div>
+      <div class="modal-body">
+        <input placeholder="Enter Secret key" name="secretkey"/>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary">Upload</button>
+      </div>
+    </div>
+  </div>
+</div>
+</form>
+<h3 class="mt-3">My Files</h3>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">File Name</th>
+      <th scope="col">Owner Name</th>
+      <th scope="col">Created Date</th>
+      <th scope="col">Modified Date</th>
+      <th scope="col">Size</th>
+      <th scope="col">Type</th>
+      <th scope="col">Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr th:each="file, iStat: ${files}">
+      <th scope="row" th:text="${iStat.count}"></th>
+      <td th:text="${file.filename}"></td>
+      <td th:text="${file.owner.name}"></td>
+      <td th:text="${#temporals.format(file.createdDate, 'dd-MM-yyyy HH:mm')}"></td>
+      <td th:text="${#temporals.format(file.modifiedDate, 'dd-MM-yyyy HH:mm')}"></td>
+      <td th:text="${file.size}"></td>
+      <td th:text="${file.type}"></td>
+      <td> 
+      	<button type="button" id="mymodal" class="btn btn-success" data-toggle="modal" data-target="#myModalDownload">Download</button>
+      	<!-- <a class="btn btn-success text-white" th:href="@{/download/{filename}(filename=${file.filename})}">Download</a>  -->
+	  	<div class="modal fade" id="myModalDownload" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	  <div class="modal-dialog" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	        <h4 class="modal-title" id="myModalLabel">Secret Key</h4>
+	      </div>
+	      <div class="modal-body">
+	        <input placeholder="Enter Secret key" id="secretkey" name="secretkey"/>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+	        <a class="btn btn-success text-white" id="test" onclick="onDownload()" th:href="@{/download/{filename}(filename=${file.filename})}">Download</a>
+	      </div>
+	    </div>
+  	</div>
+  	</div>
+	  </td>
+  	</tr>
+  </tbody>
+</table>
+</div>
+
+
+
+<!-- Button trigger modal -->
+
+
+<!-- Modal -->
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+<script type="text/javascript">
+function onDownload(){
+	console.log("element ",document.getElementById("test"));
+	var key = document.getElementById("secretkey").value;
+	console.log('value ',key);
+	console.log("element ",document.getElementById("test").href+"-"+key);
+	var url = document.getElementById("test").href+"-"+key;
+	document.getElementById("test").href = url;
+}
+</script>
 </section>
 </body>
+
 </html>

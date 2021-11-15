@@ -3,12 +3,55 @@
 <head>
 <meta charset="UTF-8">
 <title>Settings</title>
+<link rel="stylesheet" type="text/css" th:href="@{/css/settings.css}">
 </head>
 <body>
 
 <section>
 <!-- Edit Profile and Reset password -->
-<h1>Settings</h1>
+<form method="post" th:action="@{/do_userupdate}" th:object="${user}">
+<div class="container rounded bg-white mt-5 mb-5">
+    <div class="row">
+        <div class="col-md-3 border-right">
+            <div class="d-flex flex-column align-items-center text-center p-3 py-5"> 
+            <div class="profile">
+				<div class="profileImage mt-5" style="height: 5.5rem;width: 5.5rem;line-height: 5.5rem;font-size: 3.5rem;">
+					<span th:text="${fchar}"></span>
+				</div>
+			</div> <span style="width: 173px;word-break: break-all;" th:text="${user.name}" class="font-weight-bold">Username</span><span style="width: 173px;word-break: break-all;" th:text="${user.email}" class="text-black-50">user email</span><span> </span></div>
+        </div>
+        <div class="col-md-5 border-right">
+            <div class="p-3 py-5">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h4 class="text-right">Profile Settings</h4>
+                </div>
+                <div class="row mt-2">
+                    <div class="col-md-12"><label class="labels">Name</label>
+                    <input type="text" class="form-control" placeholder="Name" id="name" name="name" required="required" th:value="${user.name}"></div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-md-12"><label class="labels">Email ID</label>
+                    <input type="text" class="form-control" name="email" id="email" placeholder="enter email id" required="required" th:value="${user.email}"></div>
+                    
+                </div>
+                <div class="row mt-5">
+                	<div class="col-md-2"></div>
+                	<div class="col-md-4"><button class="btn btn-primary profile-button" type="button" id="editProfile">Edit Profile</button></div>
+	                <div class="col-md-4"><button class="btn btn-primary profile-button" type="submit" id="saveProfile">Save Profile</button></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="p-3 py-5">
+                <div class="d-flex justify-content-between align-items-center experience"><span>Reset Password</span><span style="cursor: pointer;" class="border px-3 p-1 add-experience"><i class="fa fa-sync"></i>&nbsp;Password</span></div><br>
+                
+            </div>
+        </div>
+    </div>
+</div>
+</form>
+<script type="text/javascript" th:src="@{/js/settings.js}"></script>
 </section>
+
 </body>
 </html>

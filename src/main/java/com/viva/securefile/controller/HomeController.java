@@ -1,5 +1,7 @@
 package com.viva.securefile.controller;
 
+import java.security.Principal;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +26,11 @@ public class HomeController {
 	private BCryptPasswordEncoder passwordEncoder;
 	
 	@GetMapping("/")
-	public String home() {
+	public String home(Principal principal,Model model) {
+		if(principal!=null) {
+		User user = userRepository.getUserByusername(principal.getName());
+		model.addAttribute("user", user);
+		}
 		return "home";
 	}
 	
@@ -36,9 +42,11 @@ public class HomeController {
 	}
 	
 	@GetMapping("/about")
-	public String about(Model model) {
-		User user = new User();
+	public String about(Principal principal,Model model) {
+		if(principal!=null) {
+		User user = userRepository.getUserByusername(principal.getName());
 		model.addAttribute("user", user);
+		}
 		return "about";
 	}
 	
